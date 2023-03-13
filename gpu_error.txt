@@ -1,0 +1,112 @@
+C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\python.exe "C:/Users/33381/Desktop/ELEC0135 AMLS II/assignment/github/AMLS_II_assignment22-23/main.py"
+C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\framework\dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\framework\dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\framework\dtypes.py:521: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\framework\dtypes.py:522: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\framework\dtypes.py:523: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\framework\dtypes.py:528: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+2023-03-13 17:21:55.641996: I T:\src\github\tensorflow\tensorflow\core\platform\cpu_feature_guard.cc:140] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2
+2023-03-13 17:21:57.116416: I T:\src\github\tensorflow\tensorflow\core\common_runtime\gpu\gpu_device.cc:1356] Found device 0 with properties: 
+name: NVIDIA GeForce RTX 3050 Laptop GPU major: 8 minor: 6 memoryClockRate(GHz): 1.5
+pciBusID: 0000:01:00.0
+totalMemory: 4.00GiB freeMemory: 3.25GiB
+2023-03-13 17:21:57.116661: I T:\src\github\tensorflow\tensorflow\core\common_runtime\gpu\gpu_device.cc:1435] Adding visible gpu devices: 0
+2023-03-13 17:25:14.600425: I T:\src\github\tensorflow\tensorflow\core\common_runtime\gpu\gpu_device.cc:923] Device interconnect StreamExecutor with strength 1 edge matrix:
+2023-03-13 17:25:14.600867: I T:\src\github\tensorflow\tensorflow\core\common_runtime\gpu\gpu_device.cc:929]      0 
+2023-03-13 17:25:14.601274: I T:\src\github\tensorflow\tensorflow\core\common_runtime\gpu\gpu_device.cc:942] 0:   N 
+2023-03-13 17:25:14.602084: I T:\src\github\tensorflow\tensorflow\core\common_runtime\gpu\gpu_device.cc:1053] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 2975 MB memory) -> physical GPU (device: 0, name: NVIDIA GeForce RTX 3050 Laptop GPU, pci bus id: 0000:01:00.0, compute capability: 8.6)
+2023-03-13 17:42:12.166117: W T:\src\github\tensorflow\tensorflow\core\common_runtime\bfc_allocator.cc:219] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.10GiB. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2023-03-13 17:42:12.167569: W T:\src\github\tensorflow\tensorflow\core\common_runtime\bfc_allocator.cc:219] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.10GiB. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2023-03-13 17:42:12.315413: W T:\src\github\tensorflow\tensorflow\core\common_runtime\bfc_allocator.cc:219] Allocator (GPU_0_bfc) ran out of memory trying to allocate 3.58GiB. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2023-03-13 17:42:12.315651: W T:\src\github\tensorflow\tensorflow\core\common_runtime\bfc_allocator.cc:219] Allocator (GPU_0_bfc) ran out of memory trying to allocate 3.58GiB. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2023-03-13 17:42:12.315908: W T:\src\github\tensorflow\tensorflow\core\common_runtime\bfc_allocator.cc:219] Allocator (GPU_0_bfc) ran out of memory trying to allocate 1.48GiB. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2023-03-13 17:42:12.316562: W T:\src\github\tensorflow\tensorflow\core\common_runtime\bfc_allocator.cc:219] Allocator (GPU_0_bfc) ran out of memory trying to allocate 1.48GiB. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2023-03-13 17:42:12.343883: E T:\src\github\tensorflow\tensorflow\stream_executor\cuda\cuda_blas.cc:654] failed to run cuBLAS routine cublasSgemm_v2: CUBLAS_STATUS_EXECUTION_FAILED
+2023-03-13 17:42:12.345176: W T:\src\github\tensorflow\tensorflow\core\kernels\queue_base.cc:277] _0_input_producer: Skipping cancelled enqueue attempt with queue not closed
+2023-03-13 17:42:12.345768: W T:\src\github\tensorflow\tensorflow\core\kernels\queue_base.cc:277] _1_batch/fifo_queue: Skipping cancelled enqueue attempt with queue not closed
+2023-03-13 17:42:12.346297: W T:\src\github\tensorflow\tensorflow\core\kernels\queue_base.cc:277] _1_batch/fifo_queue: Skipping cancelled enqueue attempt with queue not closed
+Traceback (most recent call last):
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\client\session.py", line 1322, in _do_call
+    return fn(*args)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\client\session.py", line 1307, in _run_fn
+    options, feed_dict, fetch_list, target_list, run_metadata)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\client\session.py", line 1409, in _call_tf_sessionrun
+    run_metadata)
+tensorflow.python.framework.errors_impl.InternalError: Blas GEMM launch failed : a.shape=(10, 1920000), b.shape=(10, 5), m=1920000, n=5, k=10
+	 [[Node: gradients/MatMul_grad/MatMul_1 = MatMul[T=DT_FLOAT, transpose_a=true, transpose_b=false, _device="/job:localhost/replica:0/task:0/device:GPU:0"](Reshape, gradients/add_2_grad/Reshape, ^gradients/add_2_grad/tuple/group_deps)]]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:/Users/33381/Desktop/ELEC0135 AMLS II/assignment/github/AMLS_II_assignment22-23/main.py", line 162, in <module>
+    task_cnn(1)
+  File "C:/Users/33381/Desktop/ELEC0135 AMLS II/assignment/github/AMLS_II_assignment22-23/main.py", line 122, in task_cnn
+    feed_dict={x: image_value, y_true: labels_value})
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\client\session.py", line 900, in run
+    run_metadata_ptr)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\client\session.py", line 1135, in _run
+    feed_dict_tensor, options, run_metadata)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\client\session.py", line 1316, in _do_run
+    run_metadata)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\client\session.py", line 1335, in _do_call
+    raise type(e)(node_def, op, message)
+tensorflow.python.framework.errors_impl.InternalError: Blas GEMM launch failed : a.shape=(10, 1920000), b.shape=(10, 5), m=1920000, n=5, k=10
+	 [[Node: gradients/MatMul_grad/MatMul_1 = MatMul[T=DT_FLOAT, transpose_a=true, transpose_b=false, _device="/job:localhost/replica:0/task:0/device:GPU:0"](Reshape, gradients/add_2_grad/Reshape, ^gradients/add_2_grad/tuple/group_deps)]]
+
+Caused by op 'gradients/MatMul_grad/MatMul_1', defined at:
+  File "C:/Users/33381/Desktop/ELEC0135 AMLS II/assignment/github/AMLS_II_assignment22-23/main.py", line 162, in <module>
+    task_cnn(1)
+  File "C:/Users/33381/Desktop/ELEC0135 AMLS II/assignment/github/AMLS_II_assignment22-23/main.py", line 94, in task_cnn
+    optimizer = tf.train.AdamOptimizer(learning_rate=0.0003).minimize(losses)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\training\optimizer.py", line 414, in minimize
+    grad_loss=grad_loss)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\training\optimizer.py", line 526, in compute_gradients
+    colocate_gradients_with_ops=colocate_gradients_with_ops)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\ops\gradients_impl.py", line 494, in gradients
+    gate_gradients, aggregation_method, stop_gradients)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\ops\gradients_impl.py", line 636, in _GradientsHelper
+    lambda: grad_fn(op, *out_grads))
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\ops\gradients_impl.py", line 385, in _MaybeCompile
+    return grad_fn()  # Exit early
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\ops\gradients_impl.py", line 636, in <lambda>
+    lambda: grad_fn(op, *out_grads))
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\ops\math_grad.py", line 1047, in _MatMulGrad
+    grad_b = gen_math_ops.mat_mul(a, grad, transpose_a=True)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\ops\gen_math_ops.py", line 4567, in mat_mul
+    name=name)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\framework\op_def_library.py", line 787, in _apply_op_helper
+    op_def=op_def)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\framework\ops.py", line 3392, in create_op
+    op_def=op_def)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\framework\ops.py", line 1718, in __init__
+    self._traceback = self._graph._extract_stack()  # pylint: disable=protected-access
+
+...which was originally created as op 'MatMul', defined at:
+  File "C:/Users/33381/Desktop/ELEC0135 AMLS II/assignment/github/AMLS_II_assignment22-23/main.py", line 162, in <module>
+    task_cnn(1)
+  File "C:/Users/33381/Desktop/ELEC0135 AMLS II/assignment/github/AMLS_II_assignment22-23/main.py", line 87, in task_cnn
+    y_predict = create_model(x)
+  File "C:/Users/33381/Desktop/ELEC0135 AMLS II/assignment/github/AMLS_II_assignment22-23/main.py", line 73, in create_model
+    y_predict = tf.matmul(x_fc, weights_fc) + bias_fc
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\ops\math_ops.py", line 2122, in matmul
+    a, b, transpose_a=transpose_a, transpose_b=transpose_b, name=name)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\ops\gen_math_ops.py", line 4567, in mat_mul
+    name=name)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\framework\op_def_library.py", line 787, in _apply_op_helper
+    op_def=op_def)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\framework\ops.py", line 3392, in create_op
+    op_def=op_def)
+  File "C:\Users\33381\anaconda3\envs\ELEC0135_py36_gpu\lib\site-packages\tensorflow\python\framework\ops.py", line 1718, in __init__
+    self._traceback = self._graph._extract_stack()  # pylint: disable=protected-access
+
+InternalError (see above for traceback): Blas GEMM launch failed : a.shape=(10, 1920000), b.shape=(10, 5), m=1920000, n=5, k=10
+	 [[Node: gradients/MatMul_grad/MatMul_1 = MatMul[T=DT_FLOAT, transpose_a=true, transpose_b=false, _device="/job:localhost/replica:0/task:0/device:GPU:0"](Reshape, gradients/add_2_grad/Reshape, ^gradients/add_2_grad/tuple/group_deps)]]
+
+
+Process finished with exit code 1
