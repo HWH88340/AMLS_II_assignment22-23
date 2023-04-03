@@ -41,7 +41,7 @@ def VGG16():
     label_list, image_list = filename2label(datanames, csv_data, image_path)
     label_list = label_list.reshape(-1, 1)
 
-    # Load the CIFAR-10 dataset
+    # Identify the training set and testing set
     x_train, x_test, y_train, y_test = train_test_split(image_list, label_list)
 
 

@@ -2,12 +2,32 @@ import tensorflow as tf
 from keras.models import Sequential
 from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D
 from sklearn.model_selection import train_test_split
+from keras.models import Model
+from keras.layers import Input, Dense, Conv2D, MaxPooling2D, BatchNormalization, Dropout, Add, Activation, AveragePooling2D, Flatten
 import pandas as pd
 import os
 import numpy as np
 import cv2
 
-def VGG19():
+def res_block(x, filters, repetitions):
+    shortcut = x
+    for i in range(repetitions):
+        if i == 0:
+            x = Conv2D(filters, (3, 3), padding='same')(x)
+        else:
+            x = Conv2D(filters, (3, 3), padding='same')(x)
+        x = BatchNormalization()(x)
+        x = Activation('relu')(x)
+        x = Conv2D(filters, (3, 3), padding='same')(x)
+        x = BatchNormalization()(x)
+        shortcut = Conv2D(filters, (1, 1), padding='same')(shortcut)
+        shortcut = BatchNormalization()(shortcut)
+        x = Add()([x, shortcut])
+        x = Activation('relu')(x)
+        shortcut = x
+    return x
+
+def ResNet():
     config = tf.compat.v1.ConfigProto()
     config.gpu_options.allow_growth = True
     session = tf.compat.v1.InteractiveSession(config=config)
@@ -44,40 +64,28 @@ def VGG19():
     # Identify the training set and testing set
     x_train, x_test, y_train, y_test = train_test_split(image_list, label_list)
 
-
-
     # Normalize the input data
     x_train = x_train / 255.0
     x_test = x_test / 255.0
 
-    # Define the VGG19 model
-    model = Sequential([
-        Conv2D(64, (3, 3), activation='relu', padding='same', input_shape=(128, 128, 3)),
-        Conv2D(64, (3, 3), activation='relu', padding='same'),
-        MaxPooling2D((2, 2)),
-        Conv2D(128, (3, 3), activation='relu', padding='same'),
-        Conv2D(128, (3, 3), activation='relu', padding='same'),
-        MaxPooling2D((2, 2)),
-        Conv2D(256, (3, 3), activation='relu', padding='same'),
-        Conv2D(256, (3, 3), activation='relu', padding='same'),
-        Conv2D(256, (3, 3), activation='relu', padding='same'),
-        Conv2D(256, (3, 3), activation='relu', padding='same'),
-        MaxPooling2D((2, 2)),
-        Conv2D(512, (3, 3), activation='relu', padding='same'),
-        Conv2D(512, (3, 3), activation='relu', padding='same'),
-        Conv2D(512, (3, 3), activation='relu', padding='same'),
-        Conv2D(512, (3, 3), activation='relu', padding='same'),
-        MaxPooling2D((2, 2)),
-        Conv2D(512, (3, 3), activation='relu', padding='same'),
-        Conv2D(512, (3, 3), activation='relu', padding='same'),
-        Conv2D(512, (3, 3), activation='relu', padding='same'),
-        Conv2D(512, (3, 3), activation='relu', padding='same'),
-        MaxPooling2D((2, 2)),
-        Flatten(),
-        Dense(4096, activation='relu'),
-        Dense(4096, activation='relu'),
-        Dense(5, activation='softmax')
-    ])
+    # Define the ResNet-18 model
+    input_tensor = Input(shape=(128, 128, 3))
+    x = Conv2D(64, (7, 7), strides=(2, 2), padding='same')(input_tensor)
+    x = BatchNormalization()(x)
+    x = Activation('relu')(x)
+    x = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding='same')(x)
+
+    x = res_block(x, 64, 2)
+    x = res_block(x, 128, 2)
+    x = res_block(x, 256, 2)
+    x = res_block(x, 512, 2)
+
+    x = AveragePooling2D(pool_size=(4, 4))(x)
+    x = Flatten()(x)
+    output_tensor = Dense(5, activation='softmax')(x)
+
+    model = Model(inputs=input_tensor, outputs=output_tensor)
+
 
     # Compile the model
     model.compile(optimizer='adam',

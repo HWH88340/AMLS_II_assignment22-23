@@ -9,7 +9,9 @@ import cv2
 from VGG16 import VGG16
 from VGG19 import VGG19
 from preprocess import preprocess
+from ResNet import ResNet
 
 # preprocess()
 # VGG16()
-VGG19()
+# VGG19()
+ResNet()
