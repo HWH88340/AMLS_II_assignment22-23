@@ -1,5 +1,4 @@
 import tensorflow as tf
-from keras.datasets import cifar10
 from keras.models import Sequential
 from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D
 from sklearn.model_selection import train_test_split
@@ -8,13 +7,15 @@ import os
 import numpy as np
 import cv2
 
-image_path = "./Datasets/processed_images"
-datanames = os.listdir(image_path)
-csv_data_1 = pd.read_csv("./Datasets/train.csv", index_col=0)
-csv_data_2 =pd.read_csv("./Datasets/test.csv", index_col=0)
+config = tf.compat.v1.ConfigProto()
+config.gpu_options.allow_growth = True
+session = tf.compat.v1.InteractiveSession(config=config)
+os.environ['CUDA_VISIBLE_DEVICES'] = '/device:GPU:0'
 
-csv_data = csv_data_1.append(csv_data_2)
-unique_flower_list = list(set(csv_data["species"]))
+image_path = "./Datasets/cassava-leaf-disease-classification/processed_images"
+datanames = os.listdir(image_path)
+csv_data = pd.read_csv("./Datasets/cassava-leaf-disease-classification/train.csv")
+
 
 # connect filename with label
 def filename2label(datanames, csv_data, image_path):
@@ -23,8 +24,9 @@ def filename2label(datanames, csv_data, image_path):
 
     for file in datanames:
         digit_str_name = "".join(list(filter(str.isdigit, str(file))))
-        flower_name = csv_data.loc[int(digit_str_name), "species"]
-        label = unique_flower_list.index(flower_name)
+        digit_str_name = digit_str_name + ".jpg"
+        row = csv_data.loc[csv_data['image_id'] == digit_str_name]
+        label = row.iat[0, 1]
         label_list.append(label)
 
         single_image_path = image_path + "/" + file
@@ -77,21 +79,23 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 
 # Train the model
-model.fit(x_train, y_train, epochs=30, validation_data=(x_test, y_test))
+model.fit(x_train, y_train, epochs=300, validation_data=(x_test, y_test))
 
 ######
 ### 需要从dataframe里面，取出叶子的名字，并给它们排序，把序号存到label_list里面
 
 
+
+#
 # import cv2
 # import os
 # import numpy as np
 #
 # # Set the path to the folder containing the images
-# input_folder_path = './Datasets/images'
+# input_folder_path = './Datasets/cassava-leaf-disease-classification/train_images'
 #
 # # Set the path to the folder where you want to save the processed images
-# output_folder_path = './Datasets/processed_images'
+# output_folder_path = './Datasets/cassava-leaf-disease-classification/processed_images'
 #
 #
 # def ResizePadding(img, fixed_side):
