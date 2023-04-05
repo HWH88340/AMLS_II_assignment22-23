@@ -86,6 +86,7 @@ def ResNet():
 
     model = Model(inputs=input_tensor, outputs=output_tensor)
 
+    # model.summary()
 
     # Compile the model
     model.compile(optimizer='adam',
