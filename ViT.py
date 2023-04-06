@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import cv2
 from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
 
 def ViT():
     image_path = "./Datasets/cassava-leaf-disease-classification/processed_images"
@@ -62,7 +63,16 @@ def ViT():
     )
 
     # Train the model
-    vit_model.fit(train_x, train_y, batch_size=10, epochs=300, validation_data=(test_x, test_y))
+    history = vit_model.fit(train_x, train_y, batch_size=10, epochs=1, validation_data=(test_x, test_y))
 
     # Evaluate the model
     vit_model.evaluate(test_x, test_y)
+
+    # plot the loss curve
+    plt.plot(history.history['loss'], label='train')
+    plt.plot(history.history['val_loss'], label='validation')
+    plt.title('Model Loss')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend()
+    plt.show()
