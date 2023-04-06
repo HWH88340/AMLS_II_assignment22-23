@@ -6,6 +6,7 @@ import pandas as pd
 import os
 import numpy as np
 import cv2
+import matplotlib.pyplot as plt
 
 def VGG19():
     config = tf.compat.v1.ConfigProto()
@@ -87,7 +88,15 @@ def VGG19():
                   metrics=['accuracy'])
 
     # Train the model
-    model.fit(x_train, y_train, batch_size=10, epochs=300, validation_data=(x_test, y_test))
+    history = model.fit(x_train, y_train, batch_size=10, epochs=1, validation_data=(x_test, y_test))
 
+    # plot the loss curve
+    plt.plot(history.history['loss'], label='train')
+    plt.plot(history.history['val_loss'], label='validation')
+    plt.title('Model Loss')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend()
+    plt.show()
 
 

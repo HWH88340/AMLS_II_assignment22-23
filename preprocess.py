@@ -10,33 +10,33 @@ def preprocess():
     output_folder_path = './Datasets/cassava-leaf-disease-classification/processed_images'
 
 
-    def ResizePadding(img, fixed_side):
-        h, w = img.shape[0], img.shape[1]
-        scale = max(w, h) / float(fixed_side)  # 获取缩放比例
-        new_w, new_h = int(w / scale), int(h / scale)
-        resize_img = cv2.resize(img, (new_w, new_h))  # 按比例缩放
+    def ResizePadding(image, fixed_side):
+        height, width = image.shape[0], image.shape[1]
+        scale = max(width, height) / float(fixed_side)  # Get the scale of image
+        width_new, height_new = int(width / scale), int(height / scale)
+        resize_image = cv2.resize(image, (width_new, height_new))  # Zoom in and out
 
-        # 计算需要填充的像素长度
-        if new_w % 2 != 0 and new_h % 2 == 0:
-            top, bottom, left, right = (fixed_side - new_h) // 2, (fixed_side - new_h) // 2, (
-                        fixed_side - new_w) // 2 + 1, (
-                                               fixed_side - new_w) // 2
-        elif new_w % 2 == 0 and new_h % 2 != 0:
-            top, bottom, left, right = (fixed_side - new_h) // 2 + 1, (fixed_side - new_h) // 2, (
-                        fixed_side - new_w) // 2, (
-                                               fixed_side - new_w) // 2
-        elif new_w % 2 == 0 and new_h % 2 == 0:
-            top, bottom, left, right = (fixed_side - new_h) // 2, (fixed_side - new_h) // 2, (fixed_side - new_w) // 2, (
-                    fixed_side - new_w) // 2
+        # Calculate the length of image
+        if width_new % 2 != 0 and height_new % 2 == 0:
+            top, bottom, left, right = (fixed_side - height_new) // 2, (fixed_side - height_new) // 2, (
+                        fixed_side - width_new) // 2 + 1, (
+                                               fixed_side - width_new) // 2
+        elif width_new % 2 == 0 and height_new % 2 != 0:
+            top, bottom, left, right = (fixed_side - height_new) // 2 + 1, (fixed_side - height_new) // 2, (
+                        fixed_side - width_new) // 2, (
+                                               fixed_side - width_new) // 2
+        elif width_new % 2 == 0 and height_new % 2 == 0:
+            top, bottom, left, right = (fixed_side - height_new) // 2, (fixed_side - height_new) // 2, (fixed_side - width_new) // 2, (
+                    fixed_side - width_new) // 2
         else:
-            top, bottom, left, right = (fixed_side - new_h) // 2 + 1, (fixed_side - new_h) // 2, (
-                        fixed_side - new_w) // 2 + 1, (
-                                               fixed_side - new_w) // 2
+            top, bottom, left, right = (fixed_side - height_new) // 2 + 1, (fixed_side - height_new) // 2, (
+                        fixed_side - width_new) // 2 + 1, (
+                                               fixed_side - width_new) // 2
 
-        # 填充图像
-        pad_img = cv2.copyMakeBorder(resize_img, top, bottom, left, right, cv2.BORDER_CONSTANT, value=[0, 0, 0])
+        # Padding the images
+        pad_image = cv2.copyMakeBorder(resize_image, top, bottom, left, right, cv2.BORDER_CONSTANT, value=[0, 0, 0])
 
-        return pad_img
+        return pad_image
 
 
     # Check if the directory already exists
@@ -50,10 +50,10 @@ def preprocess():
     # Loop over all the files in the input folder
     for filename in os.listdir(input_folder_path):
         # Load the image
-        img = cv2.imread(os.path.join(input_folder_path, filename))
+        image = cv2.imread(os.path.join(input_folder_path, filename))
 
-        new_img = ResizePadding(img, fixed_side=128)
+        new_image = ResizePadding(image, fixed_side=128)
 
         # Save the new image to the output folder
         output_path = os.path.join(output_folder_path, filename)
-        cv2.imwrite(output_path, new_img)
+        cv2.imwrite(output_path, new_image)

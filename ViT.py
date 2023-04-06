@@ -1,70 +1,3 @@
-# import tensorflow as tf
-# from keras import layers
-# from vit_keras import vit
-# import os
-# import pandas as pd
-# import numpy as np
-# import cv2
-# from sklearn.model_selection import train_test_split
-#
-# def ViT():
-#     image_path = "./Datasets/cassava-leaf-disease-classification/processed_images"
-#     # image_path = "./Datasets/cassava-leaf-disease-classification/train_images"
-#
-#     datanames = os.listdir(image_path)
-#     csv_data = pd.read_csv("./Datasets/cassava-leaf-disease-classification/train.csv")
-#
-#     # connect filename with label
-#     def filename2label(datanames, csv_data, image_path):
-#         label_list = []
-#         image_list = []
-#
-#         for file in datanames:
-#             digit_str_name = "".join(list(filter(str.isdigit, str(file))))
-#             digit_str_name = digit_str_name + ".jpg"
-#             row = csv_data.loc[csv_data['image_id'] == digit_str_name]
-#             label = row.iat[0, 1]
-#             label_list.append(label)
-#
-#             single_image_path = image_path + "/" + file
-#             image = cv2.imread(single_image_path)
-#             image_list.append(image)
-#         return np.array(label_list), np.array(image_list)
-#
-#     label_list, image_list = filename2label(datanames, csv_data, image_path)
-#     label_list = label_list.reshape(-1, 1)
-#
-#     # Load CIFAR-10 dataset
-#     x_train, x_test, y_train, y_test = train_test_split(image_list, label_list)
-#
-#     # Normalize pixel values to [0, 1]
-#     x_train = x_train.astype('float32') / 255.0
-#     x_test = x_test.astype('float32') / 255.0
-#
-#     # Define the ViT model
-#     vit_model = vit.vit_b16(
-#         image_size=128,
-#         activation='softmax',
-#         pretrained=True,
-#         include_top=True,
-#         pretrained_top=False,
-#         classes=5
-#     )
-#
-#     # Compile the model
-#     vit_model.compile(
-#         optimizer=tf.keras.optimizers.Adam(),
-#         loss='sparse_categorical_crossentropy',
-#         metrics=['accuracy']
-#     )
-#
-#     # Train the model
-#     vit_model.fit(x_train, y_train, batch_size=10, epochs=300, validation_data=(x_test, y_test))
-#
-#     # Evaluate the model
-#     vit_model.evaluate(x_test, y_test)
-
-
 import numpy as np
 import tensorflow as tf
 import keras
@@ -88,6 +21,7 @@ def ViT():
 
     datanames = os.listdir(image_path)
     csv_data = pd.read_csv("./Datasets/cassava-leaf-disease-classification/train.csv")
+    counts = csv_data["label"].value_counts()
 
     # connect filename with label
     def filename2label(datanames, csv_data, image_path):
@@ -122,10 +56,10 @@ def ViT():
 
 
     ## Configure the hyperparameters
-    learning_rate = 0.001
+    learning_rate = 0.01
     weight_decay = 0.0001
     batch_size = 10
-    num_epochs = 300
+    num_epochs = 1
     image_size = 72  # We'll resize input images to this size
     patch_size = 6  # Size of the patches to be extract from the input images
     num_patches = (image_size // patch_size) ** 2
@@ -181,27 +115,15 @@ def ViT():
             patches = tf.reshape(patches, [batch_size, -1, patch_dims])
             return patches
 
-    plt.figure(figsize=(4, 4))
+    # plt.figure(figsize=(4, 4))
     image = x_train[np.random.choice(range(x_train.shape[0]))]
-    plt.imshow(image.astype("uint8"))
-    plt.axis("off")
 
     resized_image = tf.image.resize(
         tf.convert_to_tensor([image]), size=(image_size, image_size)
     )
     patches = Patches(patch_size)(resized_image)
-    print(f"Image size: {image_size} X {image_size}")
-    print(f"Patch size: {patch_size} X {patch_size}")
-    print(f"Patches per image: {patches.shape[1]}")
-    print(f"Elements per patch: {patches.shape[-1]}")
 
     n = int(np.sqrt(patches.shape[1]))
-    plt.figure(figsize=(4, 4))
-    for i, patch in enumerate(patches[0]):
-        ax = plt.subplot(n, n, i + 1)
-        patch_img = tf.reshape(patch, (patch_size, patch_size, 3))
-        plt.imshow(patch_img.numpy().astype("uint8"))
-        plt.axis("off")
 
     ## Implement the patch encoding layer
     class PatchEncoder(layers.Layer):
@@ -283,10 +205,18 @@ def ViT():
 
         _, accuracy, top_5_accuracy = model.evaluate(x_test, y_test)
         print(f"Test accuracy: {round(accuracy * 100, 2)}%")
-        print(f"Test top 5 accuracy: {round(top_5_accuracy * 100, 2)}%")
 
         return history
 
 
     vit_classifier = create_vit_classifier()
     history = run_experiment(vit_classifier)
+
+    # plot the loss curve
+    plt.plot(history.history['loss'], label='train')
+    plt.plot(history.history['val_loss'], label='validation')
+    plt.title('Model Loss')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend()
+    plt.show()
