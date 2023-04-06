@@ -10,25 +10,26 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-def res_block(x, filters, repetitions):
-    shortcut = x
-    for i in range(repetitions):
+def resdue_block(output, filt, cycle):
+    bypass = output
+    for i in range(cycle):
         if i == 0:
-            x = Conv2D(filters, (3, 3), padding='same')(x)
+            output = Conv2D(filt, (3, 3), padding='same')(output)
         else:
-            x = Conv2D(filters, (3, 3), padding='same')(x)
-        x = BatchNormalization()(x)
-        x = Activation('relu')(x)
-        x = Conv2D(filters, (3, 3), padding='same')(x)
-        x = BatchNormalization()(x)
-        shortcut = Conv2D(filters, (1, 1), padding='same')(shortcut)
-        shortcut = BatchNormalization()(shortcut)
-        x = Add()([x, shortcut])
-        x = Activation('relu')(x)
-        shortcut = x
-    return x
+            output = Conv2D(filt, (3, 3), padding='same')(output)
+        output = BatchNormalization()(output)
+        output = Activation('relu')(output)
+        output = Conv2D(filt, (3, 3), padding='same')(output)
+        output = BatchNormalization()(output)
+        bypass = Conv2D(filt, (1, 1), padding='same')(bypass)
+        bypass = BatchNormalization()(bypass)
+        output = Add()([output, bypass])
+        output = Activation('relu')(output)
+        bypass = output
+    return output
 
 def ResNet():
+    # activate the GPU
     config = tf.compat.v1.ConfigProto()
     config.gpu_options.allow_growth = True
     session = tf.compat.v1.InteractiveSession(config=config)
@@ -63,27 +64,27 @@ def ResNet():
     label_list = label_list.reshape(-1, 1)
 
     # Identify the training set and testing set
-    x_train, x_test, y_train, y_test = train_test_split(image_list, label_list)
+    train_x, test_x, train_y, test_y = train_test_split(image_list, label_list)
 
     # Normalize the input data
-    x_train = x_train / 255.0
-    x_test = x_test / 255.0
+    train_x = train_x / 255.0
+    test_x = test_x / 255.0
 
     # Define the ResNet-18 model
     input_tensor = Input(shape=(128, 128, 3))
-    x = Conv2D(64, (7, 7), strides=(2, 2), padding='same')(input_tensor)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-    x = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding='same')(x)
+    output = Conv2D(64, (7, 7), strides=(2, 2), padding='same')(input_tensor)
+    output = BatchNormalization()(output)
+    output = Activation('relu')(output)
+    output = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding='same')(output)
 
-    x = res_block(x, 64, 2)
-    x = res_block(x, 128, 2)
-    x = res_block(x, 256, 2)
-    x = res_block(x, 512, 2)
+    output = resdue_block(output, 64, 2)
+    output = resdue_block(output, 128, 2)
+    output = resdue_block(output, 256, 2)
+    output = resdue_block(output, 512, 2)
 
-    x = AveragePooling2D(pool_size=(4, 4))(x)
-    x = Flatten()(x)
-    output_tensor = Dense(5, activation='softmax')(x)
+    output = AveragePooling2D(pool_size=(4, 4))(output)
+    output = Flatten()(output)
+    output_tensor = Dense(5, activation='softmax')(output)
 
     model = Model(inputs=input_tensor, outputs=output_tensor)
 
@@ -95,7 +96,7 @@ def ResNet():
                   metrics=['accuracy'])
 
     # Train the model
-    history = model.fit(x_train, y_train, batch_size=10, epochs=1, validation_data=(x_test, y_test))
+    history = model.fit(train_x, train_y, batch_size=10, epochs=300, validation_data=(test_x, test_y))
 
     # plot the loss curve
     plt.plot(history.history['loss'], label='train')

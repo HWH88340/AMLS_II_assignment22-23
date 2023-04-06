@@ -9,6 +9,7 @@ import cv2
 import matplotlib.pyplot as plt
 
 def VGG19():
+    # activate the GPU
     config = tf.compat.v1.ConfigProto()
     config.gpu_options.allow_growth = True
     session = tf.compat.v1.InteractiveSession(config=config)
@@ -43,13 +44,13 @@ def VGG19():
     label_list = label_list.reshape(-1, 1)
 
     # Identify the training set and testing set
-    x_train, x_test, y_train, y_test = train_test_split(image_list, label_list)
+    train_x, test_x, train_y, test_y = train_test_split(image_list, label_list)
 
 
 
     # Normalize the input data
-    x_train = x_train / 255.0
-    x_test = x_test / 255.0
+    train_x = train_x / 255.0
+    test_x = test_x / 255.0
 
     # Define the VGG19 model
     model = Sequential([
@@ -88,7 +89,7 @@ def VGG19():
                   metrics=['accuracy'])
 
     # Train the model
-    history = model.fit(x_train, y_train, batch_size=10, epochs=1, validation_data=(x_test, y_test))
+    history = model.fit(train_x, train_y, batch_size=10, epochs=300, validation_data=(test_x, test_y))
 
     # plot the loss curve
     plt.plot(history.history['loss'], label='train')
